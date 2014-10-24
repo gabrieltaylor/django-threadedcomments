@@ -6,7 +6,6 @@ from django.utils.translation import ugettext_lazy as _
 from django.utils import timezone
 
 
-
 PATH_SEPARATOR = getattr(settings, 'COMMENT_PATH_SEPARATOR', '/')
 PATH_DIGITS = getattr(settings, 'COMMENT_PATH_DIGITS', 10)
 
@@ -59,6 +58,7 @@ class ThreadedComment(Comment):
 
         self.tree_path = tree_path
         super(ThreadedComment, self).save(*args, **kwargs)
+
 
 
     def delete(self, *args, **kwargs):
