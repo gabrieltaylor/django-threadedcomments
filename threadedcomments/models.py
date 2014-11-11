@@ -10,13 +10,19 @@ PATH_SEPARATOR = getattr(settings, 'COMMENT_PATH_SEPARATOR', '/')
 PATH_DIGITS = getattr(settings, 'COMMENT_PATH_DIGITS', 10)
 
 
+class ThreadedCommentManager(CommentManager):
+    def filter(self, *args, **kwargs):
+        "small optimization"
+        return CommentManager.filter(self, *args, **kwargs).select_related("user")
+
+
 class ThreadedComment(Comment):
     title = models.TextField(_('Title'), blank=True)
     parent = models.ForeignKey('self', null=True, blank=True, default=None, related_name='children', verbose_name=_('Parent'))
     last_child = models.ForeignKey('self', null=True, blank=True, on_delete=models.SET_NULL, verbose_name=_('Last child'))
     tree_path = models.TextField(_('Tree path'), editable=False, db_index=True)
 
-    objects = CommentManager()
+    objects = ThreadedCommentManager()
 
     @property
     def depth(self):
