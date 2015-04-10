@@ -1,7 +1,7 @@
 from django import template
 from django.template.loader import render_to_string
-from django.contrib.comments.templatetags.comments import BaseCommentNode
-from django.contrib import comments
+from django_comments.templatetags.comments import BaseCommentNode
+import django_comments
 from threadedcomments.util import annotate_tree_properties, fill_tree as real_fill_tree
 
 register = template.Library()
@@ -113,7 +113,7 @@ class CommentFormNode(BaseThreadedCommentNode):
 
         obj = self.get_object(context)
         if obj:
-            return comments.get_form()(obj, parent=parent_id)
+            return django_comments.get_form()(obj, parent=parent_id)
         else:
             return None
 
