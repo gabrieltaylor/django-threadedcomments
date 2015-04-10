@@ -6,6 +6,7 @@ from threadedcomments.util import annotate_tree_properties, fill_tree as real_fi
 
 register = template.Library()
 
+
 class BaseThreadedCommentNode(BaseCommentNode):
     def __init__(self, parent=None, flat=False, root_only=False, **kwargs):
         self.parent = parent
